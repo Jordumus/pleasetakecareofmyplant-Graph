@@ -49,7 +49,15 @@ var graph1 = function () {
 
             d.date = parseDate(d.date);
             if (d.close == null || d.close == "") {
-                d.val = (parseInt(data[i - 1].close) + parseInt(data[i + 1].close)) / 2;
+                var lookUpMin = 1;
+                while (data[i - lookUpMin].close == null || data[i - lookUpMin].close == "")
+                    lookUpMin++;
+
+                var lookUpMax = 1;
+                while ((data[i + lookUpMax].close == null || data[i + lookUpMax].close == "") && i + lookUpMax < data.length)
+                    lookUpMax++;
+
+                d.val = (parseInt(data[i - lookUpMin].close) + parseInt(data[i + lookUpMax].close)) / 2;
                 d.close = d.val;
             }
             else
@@ -126,7 +134,15 @@ var graph2 = function () {
 
             data[i].date = parseDate(data[i].date);
             if (data[i].close == null || data[i].close == "") {
-                data[i].val = (parseInt(data[i - 1].close) + parseInt(data[i + 1].close)) / 2;
+                var lookUpMin = 1;
+                while (data[i - lookUpMin].close == null || data[i - lookUpMin].close == "")
+                    lookUpMin++;
+
+                var lookUpMax = 1;
+                while ((data[i + lookUpMax].close == null || data[i + lookUpMax].close == "") && i + lookUpMax < data.length)
+                    lookUpMax++;
+
+                data[i].val = (parseInt(data[i - lookUpMin].close) + parseInt(data[i + lookUpMax].close)) / 2;
                 data[i].close = data[i].val;
             }
             else
